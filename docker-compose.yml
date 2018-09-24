@@ -11,8 +11,8 @@ services:
     env_file:
       - ./hadoop-hive.env
     ports:
-      - 50070:50070
-      - 8020:8020
+      - 127.0.0.1:50070:50070
+      - 127.0.0.1:8020:8020
   datanode:
     image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
     container_name: datanode
@@ -23,7 +23,7 @@ services:
     environment:
       SERVICE_PRECONDITION: "namenode:50070"
     ports:
-      - "50075:50075"
+      - 127.0.0.1:50075:50075
   hive-server:
     image: bde2020/hive:2.3.2-postgresql-metastore
     container_name: hive-server
@@ -33,7 +33,7 @@ services:
       HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/metastore"
       SERVICE_PRECONDITION: "hive-metastore:9083"
     ports:
-      - "10000:10000"
+      - 127.0.0.1:10000:10000
   hive-metastore:
     image: bde2020/hive:2.3.2-postgresql-metastore
     container_name: hive-metastore
@@ -43,7 +43,7 @@ services:
     environment:
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075 hive-metastore-postgresql:5432"
     ports:
-      - "9083:9083"
+      - 127.0.0.1:9083:9083
   hive-metastore-postgresql:
     image: bde2020/hive-metastore-postgresql:2.3.0
     container_name: hive-metastore-postgresql
@@ -51,5 +51,5 @@ services:
     image: shawnzhu/prestodb:0.181
     container_name: presto-coordinator
     ports:
-      - "8090:8080"
+      - 127.0.0.1:8090:8080
 
